@@ -12,12 +12,19 @@ class RegisterUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
+
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+        ];
+    }
+
+    public function messages() {
+
+        return [
+            'email.unique' => 'User with this email is already registered'
         ];
     }
 }
