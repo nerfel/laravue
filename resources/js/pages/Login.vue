@@ -8,7 +8,7 @@
             </div>
             <!-- sign-in -->
             <div class="m-6">
-                <form class="mb-4" @submit.prevent="checkForm">
+                <form class="mb-4" @submit.prevent="sendForm">
                     <div class="mb-6">
                         <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
                         <input
@@ -19,16 +19,18 @@
                                :class="v$.form.email.$error ? 'border-red-400' : 'border-gray-300'"
                                v-model.trim="form.email"
                         />
-                        <p
-                            v-if="v$.form.$dirty && v$.form.email.required.$invalid"
-                            class="invalid-feedback">
-                             Обязательное поле
-                        </p>
-                        <p
-                            v-if="v$.form.$dirty && v$.form.email.email.$invalid"
-                            class="invalid-feedback">
-                            Поле должно содержать валидный email
-                        </p>
+                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                            <li
+                                v-if="v$.form.$dirty && v$.form.email.required.$invalid"
+                                class="invalid-feedback">
+                                Required field
+                            </li>
+                            <li
+                                v-if="v$.form.$dirty && v$.form.email.email.$invalid"
+                                class="invalid-feedback">
+                                The field must contain a valid email
+                            </li>
+                        </ul>
                     </div>
                     <div class="mb-6">
                         <div class="flex justify-between mb-2">
@@ -43,11 +45,18 @@
                                :class="v$.form.password.$error ? 'border-red-400' : 'border-gray-300'"
                                v-model.trim="form.password"
                         />
-                        <p
-                            v-if="v$.form.$dirty && v$.form.password.required.$invalid"
-                            class="invalid-feedback">
-                            Обязательное поле
-                        </p>
+                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                            <li
+                                v-if="v$.form.$dirty && v$.form.password.required.$invalid"
+                                class="invalid-feedback">
+                                Required field
+                            </li>
+                            <li
+                                v-if="v$.form.$dirty && v$.form.password.minLength.$invalid"
+                                class="invalid-feedback">
+                                Password must be at least 6 characters long
+                            </li>
+                        </ul>
                     </div>
                     <div class="mb-6">
                         <button
@@ -104,14 +113,7 @@ export default {
     },
     methods: {
         sendForm() {
-            // console.log(this.v$.form.email);
-            // this.v$.$validate()
-            // if(!this.v$.$error) {
-            //     alert('Form successfully submitted.')
-            // }
-            // else {
-            //     alert('Form failed validation')
-            // }
+            this.v$.form.$touch()
             if (this.pending === false) {
                 this.pending = true;
                 axios.post(API_LOGIN_URL, this.form)
