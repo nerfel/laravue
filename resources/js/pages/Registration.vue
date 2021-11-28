@@ -1,125 +1,124 @@
 <template>
-    <div class="flex justify-center min-h-screen bg-gray-100">
-        <div class="container mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white">
-            <!-- header -->
-            <div class="text-center my-6">
-                <h1 class="text-3xl font-semibold text-gray-700">Sign up</h1>
-                <p class="text-gray-500">Sign up new account</p>
-            </div>
-            <!-- sign-in -->
-            <div class="m-6">
-                <form class="mb-4" @submit.prevent="sendForm">
-                    <div class="mb-6">
-                        <label for="name" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Your name</label>
-                        <input
-                            name="name"
-                            id="name"
-                            placeholder="Enter your name"
-                            class="w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                            :class="v$.form.name.$error ? 'border-red-400' : 'border-gray-300'"
-                            v-model.trim="form.name"
-                        />
-                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                            <li
-                                v-if="v$.form.$dirty && v$.form.name.required.$invalid"
-                                class="invalid-feedback">
-                                Required field
-                            </li>
-                            <li
-                                v-if="v$.form.$dirty && v$.form.name.minNameLength.$invalid"
-                                class="invalid-feedback">
-                                The field must contain at least two characters
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mb-6">
-                        <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
-                        <input
-                            name="email"
-                            id="email"
-                            placeholder="Your email address"
-                            class="w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                            :class="v$.form.email.$error ? 'border-red-400' : 'border-gray-300'"
-                            v-model.trim="form.email"
-                        />
-                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                            <li
-                                v-if="v$.form.$dirty && v$.form.email.required.$invalid"
-                                class="invalid-feedback">
-                                Required field
-                            </li>
-                            <li
-                                v-if="v$.form.$dirty && v$.form.email.email.$invalid"
-                                class="invalid-feedback">
-                                The field must contain a valid email
-                            </li>
-                            <li
-                                v-if="v$.form.$dirty && v$.form.email.isUnique.$invalid"
-                                class="invalid-feedback">
-                                User with this email is already registered
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
-                        </div>
-                        <input type="password"
-                               name="password"
-                               id="password"
-                               placeholder="Your password"
-                               class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                               :class="v$.form.password.$error ? 'border-red-400' : 'border-gray-300'"
-                               v-model.trim="form.password"
-                        />
-                    </div>
+    <div class="container mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white">
+        <!-- header -->
+        <div class="text-center my-6">
+            <h1 class="text-3xl font-semibold text-gray-700">Sign up</h1>
+            <p class="text-gray-500">Sign up new account</p>
+        </div>
+        <!-- sign-in -->
+        <div class="m-6">
+            <form class="mb-4" @submit.prevent="sendForm">
+                <div class="mb-6">
+                    <label for="name" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Your name</label>
+                    <input
+                        name="name"
+                        id="name"
+                        placeholder="Enter your name"
+                        class="w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                        :class="v$.form.name.$error ? 'border-red-400' : 'border-gray-300'"
+                        v-model.trim="form.name"
+                    />
                     <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
                         <li
-                            v-if="v$.form.$dirty && v$.form.password.minLength.$invalid"
+                            v-if="v$.form.$dirty && v$.form.name.required.$invalid"
                             class="invalid-feedback">
-                            Password must be at least 6 characters long
+                            Required field
+                        </li>
+                        <li
+                            v-if="v$.form.$dirty && v$.form.name.minNameLength.$invalid"
+                            class="invalid-feedback">
+                            The field must contain at least two characters
                         </li>
                     </ul>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Confirm password</label>
-                        </div>
-                        <input type="password"
-                               name="password"
-                               id="confirm_password"
-                               placeholder="Your password"
-                               class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                               :class="v$.form.password_confirmation.$error ? 'border-red-400' : 'border-gray-300'"
-                               v-model.trim="form.password_confirmation"
-                        />
-                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                            <li
-                                v-if="v$.form.$dirty && v$.form.password_confirmation.required.$invalid"
-                                class="invalid-feedback">
-                                Required field
-                            </li>
-                            <li
-                                v-if="v$.form.$dirty && v$.form.password_confirmation.sameAsPassword.$invalid"
-                                class="invalid-feedback">
-                                The field must match the password entered above
-                            </li>
-                        </ul>
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
+                    <input
+                        name="email"
+                        id="email"
+                        placeholder="Your email address"
+                        class="w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                        :class="v$.form.email.$error ? 'border-red-400' : 'border-gray-300'"
+                        v-model.trim="form.email"
+                    />
+                    <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        <li
+                            v-if="v$.form.$dirty && v$.form.email.required.$invalid"
+                            class="invalid-feedback">
+                            Required field
+                        </li>
+                        <li
+                            v-if="v$.form.$dirty && v$.form.email.email.$invalid"
+                            class="invalid-feedback">
+                            The field must contain a valid email
+                        </li>
+                        <li
+                            v-if="v$.form.$dirty && v$.form.email.isUnique.$invalid"
+                            class="invalid-feedback">
+                            User with this email is already registered
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
                     </div>
-                    <div class="mb-6">
-                        <button
-                            type="submit"
-                            class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none duration-100 ease-in-out disabled:opacity-50"
-                            :class="[{'disabled:opacity-50': pending || v$.form.$error}]"
-                            :disabled="pending || v$.form.$error"
-                        >
-                            Sign up
-                        </button>
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           placeholder="Your password"
+                           class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                           :class="v$.form.password.$error ? 'border-red-400' : 'border-gray-300'"
+                           v-model.trim="form.password"
+                    />
+                </div>
+                <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                    <li
+                        v-if="v$.form.$dirty && v$.form.password.minLength.$invalid"
+                        class="invalid-feedback">
+                        Password must be at least 6 characters long
+                    </li>
+                </ul>
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Confirm password</label>
                     </div>
-                    <p class="text-sm text-center text-gray-400">
-                        Already have an account?
-                        <router-link to="/login" class="font-semibold text-indigo-500 focus:text-indigo-600 focus:outline-none focus:underline">Sign in</router-link>
-                    </p>
-                </form>
+                    <input type="password"
+                           name="password"
+                           id="confirm_password"
+                           placeholder="Your password"
+                           class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                           :class="v$.form.password_confirmation.$error ? 'border-red-400' : 'border-gray-300'"
+                           v-model.trim="form.password_confirmation"
+                    />
+                    <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        <li
+                            v-if="v$.form.$dirty && v$.form.password_confirmation.required.$invalid"
+                            class="invalid-feedback">
+                            Required field
+                        </li>
+                        <li
+                            v-if="v$.form.$dirty && v$.form.password_confirmation.sameAsPassword.$invalid"
+                            class="invalid-feedback">
+                            The field must match the password entered above
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <button
+                        type="submit"
+                        class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none duration-100 ease-in-out disabled:opacity-50"
+                        :class="[{'disabled:opacity-50': pending || v$.form.$error}]"
+                        :disabled="pending || v$.form.$error"
+                    >
+                        Sign up
+                    </button>
+                </div>
+                <p class="text-sm text-center text-gray-400">
+                    Already have an account?
+                    <router-link to="/login" class="font-semibold text-indigo-500 focus:text-indigo-600 focus:outline-none focus:underline">Sign in</router-link>
+                </p>
+            </form>
 <!--                <div class="flex flex-row justify-center mb-8">-->
 <!--                    <span class="absolute bg-white px-4 text-gray-500">or sign-in with</span>-->
 <!--                    <div class="w-full bg-gray-200 mt-3 h-px"></div>-->
@@ -135,7 +134,6 @@
 <!--                        Vkontakte-->
 <!--                    </button>-->
 <!--                </div>-->
-            </div>
         </div>
     </div>
 </template>
@@ -145,7 +143,6 @@ import axios from 'axios';
 import {API_REGISTRATION_URL} from '../api/auth';
 import useValidate from "@vuelidate/core";
 import { email, required, minLength, sameAs } from '@vuelidate/validators';
-
 
 export default {
     name: 'Registration',
@@ -208,6 +205,14 @@ export default {
     watch: {
         'form.email'() {
             this.emailIsUnique = true
+        }
+    },
+    mounted() {
+        let token = localStorage.getItem('auth_token')
+
+        if(token) {
+            this.loggedIn = true
+            this.$router.push({ name: 'home'})
         }
     }
 }

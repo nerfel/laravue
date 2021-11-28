@@ -1,77 +1,76 @@
 <template>
-    <div class="flex justify-center min-h-screen bg-gray-100">
-        <div class="container sm:mt-40 mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white">
-            <!-- header -->
-            <div class="text-center my-6">
-                <h1 class="text-3xl font-semibold text-gray-700">Sign in</h1>
-                <p class="text-gray-500">Sign in to access your account</p>
-            </div>
-            <!-- sign-in -->
-            <div class="m-6">
-                <form class="mb-4" @submit.prevent="sendForm">
-                    <div class="mb-6">
-                        <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
-                        <input
-                               name="email"
-                               id="email"
-                               placeholder="Your email address"
-                               class="w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                               :class="v$.form.email.$error ? 'border-red-400' : 'border-gray-300'"
-                               v-model.trim="form.email"
-                        />
-                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                            <li
-                                v-if="v$.form.$dirty && v$.form.email.required.$invalid"
-                                class="invalid-feedback">
-                                Required field
-                            </li>
-                            <li
-                                v-if="v$.form.$dirty && v$.form.email.email.$invalid"
-                                class="invalid-feedback">
-                                The field must contain a valid email
-                            </li>
-                        </ul>
+    <div class="container sm:mt-40 mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white">
+        <!-- header -->
+        <div class="text-center my-6">
+            <h1 class="text-3xl font-semibold text-gray-700">Sign in</h1>
+            <p class="text-gray-500">Sign in to access your account</p>
+        </div>
+        <!-- sign-in -->
+        <div class="m-6">
+            <form class="mb-4" @submit.prevent="sendForm">
+                <div class="mb-6">
+                    <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
+                    <input
+                           name="email"
+                           id="email"
+                           placeholder="Your email address"
+                           class="w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                           :class="v$.form.email.$error ? 'border-red-400' : 'border-gray-300'"
+                           v-model.trim="form.email"
+                    />
+                    <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        <li
+                            v-if="v$.form.$dirty && v$.form.email.required.$invalid"
+                            class="invalid-feedback">
+                            Required field
+                        </li>
+                        <li
+                            v-if="v$.form.$dirty && v$.form.email.email.$invalid"
+                            class="invalid-feedback">
+                            The field must contain a valid email
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
+                        <a href="#!" class="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300">Forgot password?</a>
                     </div>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
-                            <a href="#!" class="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300">Forgot password?</a>
-                        </div>
-                        <input type="password"
-                               name="password"
-                               id="password"
-                               placeholder="Your password"
-                               class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                               :class="v$.form.password.$error ? 'border-red-400' : 'border-gray-300'"
-                               v-model.trim="form.password"
-                        />
-                        <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                            <li
-                                v-if="v$.form.$dirty && v$.form.password.required.$invalid"
-                                class="invalid-feedback">
-                                Required field
-                            </li>
-                            <li
-                                v-if="v$.form.$dirty && v$.form.password.minLength.$invalid"
-                                class="invalid-feedback">
-                                Password must be at least 6 characters long
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mb-6">
-                        <button
-                            type="submit"
-                            class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none duration-100 ease-in-out"
-                            :disabled="pending || v$.form.$error"
-                        >
-                            Sign in
-                        </button>
-                    </div>
-                    <p class="text-sm text-center text-gray-400">
-                        Don&#x27;t have an account yet?
-                        <router-link to="/registration" class="font-semibold text-indigo-500 focus:text-indigo-600 focus:outline-none focus:underline">Sign up</router-link>
-                    </p>
-                </form>
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           placeholder="Your password"
+                           class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                           :class="v$.form.password.$error ? 'border-red-400' : 'border-gray-300'"
+                           v-model.trim="form.password"
+                    />
+                    <ul class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        <li
+                            v-if="v$.form.$dirty && v$.form.password.required.$invalid"
+                            class="invalid-feedback">
+                            Required field
+                        </li>
+                        <li
+                            v-if="v$.form.$dirty && v$.form.password.minLength.$invalid"
+                            class="invalid-feedback">
+                            Password must be at least 6 characters long
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <button
+                        type="submit"
+                        class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none duration-100 ease-in-out"
+                        :disabled="pending || v$.form.$error"
+                    >
+                        Sign in
+                    </button>
+                </div>
+                <p class="text-sm text-center text-gray-400">
+                    Don&#x27;t have an account yet?
+                    <router-link to="/registration" class="font-semibold text-indigo-500 focus:text-indigo-600 focus:outline-none focus:underline">Sign up</router-link>
+                </p>
+            </form>
 <!--                <div class="flex flex-row justify-center mb-8">-->
 <!--                    <span class="absolute bg-white px-4 text-gray-500">or sign-in with</span>-->
 <!--                    <div class="w-full bg-gray-200 mt-3 h-px"></div>-->
@@ -87,7 +86,6 @@
 <!--                        Vkontakte-->
 <!--                    </button>-->
 <!--                </div>-->
-            </div>
         </div>
     </div>
 </template>
@@ -118,7 +116,10 @@ export default {
                 this.pending = true;
                 axios.post(API_LOGIN_URL, this.form)
                     .then(response => {
-                        this.loggedIn = true;
+                        // console.log(this.form)
+                        localStorage.setItem('auth_token', response.data.token)
+
+                        this.$router.push({name: 'home'})
                     })
                     .catch(errors => {})
                     .then(() => {
@@ -133,6 +134,14 @@ export default {
                 email: { email, required },
                 password: { required, minLength:minLength(6) }
             }
+        }
+    },
+    mounted() {
+        let token = localStorage.getItem('auth_token')
+
+        if(token) {
+            this.loggedIn = true
+            this.$router.push({ name: 'home'})
         }
     }
 }
