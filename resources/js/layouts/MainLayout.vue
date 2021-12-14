@@ -28,13 +28,14 @@
         <Sidebar></Sidebar>
         <!-- ./Sidebar -->
         <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
-            <router-view :user="user" />
+            <router-view />
         </div>
     </div>
 </template>
 
 <script>
 import {API_LOGOUT_URL} from "../api/auth";
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 
@@ -43,17 +44,11 @@ export default {
     components: { Sidebar },
     data() {
         return {
-            user: {
-                token: localStorage.getItem('auth_token'),
-                name: '',
-                email: ''
-            }
+
         }
     },
     methods: {
         logout() {
-            console.log("производим логаут")
-
             axios.delete(API_LOGOUT_URL, {
                 headers: {
                     'Authorization': `Bearer ${this.user.token}`
@@ -62,24 +57,22 @@ export default {
                 .then(response => {
                     if(response.data.success) {
                         localStorage.removeItem('auth_token')
+                        this.clearUserData()
                         this.$router.push({name: 'login'})
                     }
                 })
-                .catch(errors => {});
-        }
+        },
+        ...mapActions('user', ['getUserInfo']),
+        ...mapMutations('user', ['clearUserData'])
+    },
+    computed: {
+        ...mapGetters('user', ['user'])
     },
     mounted() {
-        axios.get('/api/info', {
-            headers: {
-                'Authorization': `Bearer ${this.user.token}`
-            }
-        })
-            .then(response => {
-                this.user.email = response.data.email
-                this.user.name = response.data.name
-            })
+        if(localStorage.getItem('auth_token')) {
+            this.getUserInfo()
+        }
     }
-
 
 }
 </script>

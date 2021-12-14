@@ -26,14 +26,31 @@
 </template>
 
 <script>
+import {email, minLength, required} from "@vuelidate/validators";
+import { mapGetters } from 'vuex';
+
 export default {
     name: "ProfileInfo",
-    props: {
-        user: {
-            type: Object,
-            required: true
+    data() {
+      return {
+          password: '',
+          passwordConfirm: ''
+      }
+    },
+    methods: {
+      saveProfileInfo() {
+        console.log('go save?')
+      }
+    },
+    computed: mapGetters('user', ['user']),
+    validations() {
+        return {
+            form: {
+                email: { email, required },
+                password: { required, minLength:minLength(6) }
+            }
         }
-    }
+    },
 }
 
 </script>

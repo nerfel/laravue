@@ -116,9 +116,7 @@ export default {
                 this.pending = true;
                 axios.post(API_LOGIN_URL, this.form)
                     .then(response => {
-                        // console.log(this.form)
                         localStorage.setItem('auth_token', response.data.token)
-
                         this.$router.push({name: 'home'})
                     })
                     .catch(errors => {})
