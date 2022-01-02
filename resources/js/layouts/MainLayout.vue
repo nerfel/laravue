@@ -2,8 +2,8 @@
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white text-black">
         <header class="fixed w-full flex items-center justify-between h-14 text-white z-10 bg-blue-800">
             <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 border-none">
-                <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="/images/default-avatar.jpg" />
-                <span class="hidden md:block">{{ user.name }}</span>
+                <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="/images/default-avatar.jpg" alt="avatar" />
+                <span class="hidden md:block">{{ info.name }}</span>
             </div>
             <div class="flex justify-between items-center h-14 bg-blue-800 header-right">
                 <ul class="flex items-center">
@@ -49,9 +49,10 @@ export default {
     },
     methods: {
         logout() {
+            const token = localStorage.getItem('auth_token')
             axios.delete(API_LOGOUT_URL, {
                 headers: {
-                    'Authorization': `Bearer ${this.user.token}`
+                    'Authorization': `Bearer ${token}`
                 }
             })
                 .then(response => {
@@ -62,15 +63,15 @@ export default {
                     }
                 })
         },
-        ...mapActions('user', ['getUserInfo']),
+        ...mapActions('user', ['fetchUserInfo']),
         ...mapMutations('user', ['clearUserData'])
     },
     computed: {
-        ...mapGetters('user', ['user'])
+        ...mapGetters('user', ['info'])
     },
-    mounted() {
+    async mounted() {
         if(localStorage.getItem('auth_token')) {
-            this.getUserInfo()
+            this.fetchUserInfo()
         }
     }
 

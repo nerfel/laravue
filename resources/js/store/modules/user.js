@@ -1,48 +1,60 @@
 import axios from "axios";
-import {API_LOGOUT_URL} from "../../api/auth";
 
 export default {
     namespaced: true,
-    state() {
-        return {
-            token: '',
-            email: '',
-            name: '',
-            lastName: ''
-
-        }
+    state: {
+        info: {},
+        userToken: localStorage.getItem('auth_token')
     },
     mutations: {
         setUser(state, payload) {
-            state.token = localStorage.getItem('auth_token')
-            state.email = payload.email
-            state.name = payload.name
+            state.info = payload
         },
         clearUserData(state) {
-            state.token = ''
-            state.email = ''
-            state.name = ''
-            state.lastName = ''
+            state.info = {}
         }
     },
     actions: {
-        getUserInfo(ctx) {
-            const token = localStorage.getItem('auth_token')
-            if(token) {
-                axios.get('/api/info', {
+        async fetchUserInfo(ctx) {
+            try {
+                const response = await axios.get('/api/info', {
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${ctx.state.userToken}`
                     }
                 })
-                    .then(response => {
-                        ctx.commit('setUser', response.data)
-                    })
+                ctx.commit('setUser', response.data)
+
+                return response.data
+            }
+            catch (e) {
+                console.log(e)
             }
         },
+        async updateUserInfo(ctx, data) {
+            try {
+                return axios.put('api/update-user-info', data, {
+                    headers: {
+                        'Authorization': `Bearer ${ctx.state.userToken}`
+                    }
+                })
+                    .then((response) => {
+                        if(response.data.success) {
+                            ctx.commit('setUser', response.data.user)
+                            return response.data
+                        }
+                        else {
+                            throw response.data.message
+                        }
+                    })
+
+            }
+            catch (e) {
+                console.log(e)
+                throw e
+            }
+        }
     },
     getters: {
-        user(state) {
-            return state
-        }
+        info: state => state.info
     }
 }

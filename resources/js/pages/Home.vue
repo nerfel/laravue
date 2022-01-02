@@ -18,12 +18,6 @@ import ProfileInfo from "../components/ProfileInfo";
 export default {
     name: "Home",
     components: { ProfileInfo },
-    props: {
-        user: {
-            type: Object,
-            required: true
-        }
-    },
     data() {
         return {
 
