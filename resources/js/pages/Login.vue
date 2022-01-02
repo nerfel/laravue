@@ -95,6 +95,7 @@ import axios from 'axios';
 import { API_LOGIN_URL } from '../api/auth';
 import useValidate from '@vuelidate/core';
 import { email, required, minLength } from '@vuelidate/validators';
+import { mapMutations } from 'vuex';
 
 export default {
     name: 'Login',
@@ -117,6 +118,7 @@ export default {
                 axios.post(API_LOGIN_URL, this.form)
                     .then(response => {
                         localStorage.setItem('auth_token', response.data.token)
+                        this.setUserToken()
                         this.$router.push({name: 'home'})
                     })
                     .catch(errors => {})
@@ -124,7 +126,8 @@ export default {
                         this.pending = false;
                     });
             }
-        }
+        },
+        ...mapMutations('user', ['setUserToken'])
     },
     validations() {
         return {
@@ -139,6 +142,7 @@ export default {
 
         if(token) {
             this.loggedIn = true
+            this.setUserToken()
             this.$router.push({ name: 'home'})
         }
     }

@@ -12,6 +12,9 @@ export default {
         },
         clearUserData(state) {
             state.info = {}
+        },
+        setUserToken(state) {
+            state.userToken = localStorage.getItem('auth_token')
         }
     },
     actions: {
