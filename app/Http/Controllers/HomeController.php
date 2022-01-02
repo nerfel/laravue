@@ -10,6 +10,10 @@ class HomeController extends Controller
 
         $user = $request->user();
 
-        return response()->json($user);
+        return response()->json([
+            'email' => $user->email,
+            'name' => $user->name,
+            'lastName' => $user->last_name ? $user->last_name : "",
+        ]);
     }
 }
