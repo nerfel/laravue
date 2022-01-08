@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -50,5 +52,27 @@ class UserController extends Controller
         }
 
     }
+
+    public function getUserTokens(Request $request) {
+
+        $user = $request->user();
+        $response = Array();
+        $currentToken = $user->currentAccessToken();
+        $response['current'] = [
+            'id' => $currentToken->id,
+            'last_used_at' => Carbon::parse($currentToken->last_used_at)->format('Y-m-d H:i'),
+            'created_at' => Carbon::parse($currentToken->created_at)->format('Y-m-d H:i'),
+            'updated_at' => Carbon::parse($currentToken->updated_at)->format('Y-m-d H:i')
+        ];
+        $response['other'] = DB::table('personal_access_tokens')
+            ->select('id', 'last_used_at', 'created_at', 'updated_at')
+            ->where('id', '!=', $currentToken->id)
+            ->where('tokenable_id', $user->id)
+            ->get();
+
+        return response()->json($response);
+
+    }
+
 
 }

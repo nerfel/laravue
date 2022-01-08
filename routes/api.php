@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::get('/info', [HomeController::class, 'home']);
     Route::put('/update-user-info', [UserController::class, 'updateUserInfo']);
+    Route::get('/user-tokens', [UserController::class, 'getUserTokens']);
     Route::delete('/logout', [LoginController::class, 'logout']);
 
 });
