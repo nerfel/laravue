@@ -74,5 +74,8 @@ class UserController extends Controller
 
     }
 
+    public function deleteToken(Request $request, $tokenId) {
+        return response()->json(['success' => (bool) $request->user()->tokens()->where('id', $tokenId)->delete()]);
+    }
 
 }
