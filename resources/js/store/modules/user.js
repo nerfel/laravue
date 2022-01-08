@@ -4,7 +4,8 @@ export default {
     namespaced: true,
     state: {
         info: {},
-        userToken: localStorage.getItem('auth_token')
+        userToken: localStorage.getItem('auth_token'),
+        tokensList: {}
     },
     mutations: {
         setUser(state, payload) {
@@ -15,6 +16,12 @@ export default {
         },
         setUserToken(state) {
             state.userToken = localStorage.getItem('auth_token')
+        },
+        setTokens(state, payload) {
+            state.tokensList = payload
+        },
+        removeToken(state, payload) {
+            state.tokensList.other = state.tokensList.other.filter(t => t.id !== payload)
         }
     },
     actions: {
@@ -55,9 +62,32 @@ export default {
                 console.log(e)
                 throw e
             }
+        },
+        fetchUserTokens(ctx) {
+            return axios.get('/api/user-tokens', {
+                headers: {
+                    'Authorization': `Bearer ${ctx.state.userToken}`
+                }
+            })
+                .then((response) => {
+                    ctx.commit('setTokens', response.data)
+                })
+        },
+        deleteUserToken(ctx, data) {
+            return axios.delete(`api/delete-user-token/${data.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${ctx.state.userToken}`
+                }
+            })
+                .then((response) => {
+                    if(response.data.success) {
+                        ctx.commit('removeToken', data.id)
+                    }
+                })
         }
     },
     getters: {
-        info: state => state.info
+        info: state => state.info,
+        tokens: state => state.tokensList
     }
 }
