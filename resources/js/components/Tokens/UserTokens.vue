@@ -3,9 +3,9 @@
     <div class="mt-4 mx-4">
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
-                <table v-if="Object.keys(tokens).length !== 0" class="w-full">
+                <table class="w-full">
                     <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
                         <th class="px-4 py-3">Token id</th>
                         <th class="px-4 py-3">Date of last use</th>
                         <th class="px-4 py-3">Created at</th>
@@ -13,21 +13,32 @@
                         <th class="px-4 py-3"></th>
                     </tr>
                     </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        <Token
-                            :token="tokens.current"
-                            :isCurrent="true"
-                        />
-                        <transition-group
-                            name="token-list"
-                        >
+                    <tbody>
+                        <template v-if="Object.keys(tokens).length !== 0" class="bg-white divide-y">
                             <Token
-                                v-for="token in tokens.other"
-                                :key="token.id"
-                                :token="token"
-                                @delete="deleteUserToken(token)"
+                                :token="tokens.current"
+                                :isCurrent="true"
                             />
-                        </transition-group>
+                            <transition-group
+                                name="token-list"
+                            >
+                                <Token
+                                    v-for="token in tokens.other"
+                                    :key="token.id"
+                                    :token="token"
+                                    @delete="deleteUserToken(token)"
+                                />
+                            </transition-group>
+                        </template>
+                        <tr v-else>
+                            <td colspan="100%">
+                                <div class="text-center py-2">
+                                    <div class="spinner-border text-center">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

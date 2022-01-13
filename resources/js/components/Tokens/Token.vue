@@ -1,5 +1,5 @@
 <template>
-    <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+    <tr class="bg-gray-50 hover:bg-gray-100 text-gray-700">
         <td class="px-4 py-3 text-sm">{{ token.id }}</td>
         <td class="px-4 py-3 text-sm" :class="token.last_used_at == null ? 'text-gray-400' : ''">
             {{ token.last_used_at ? token.last_used_at : 'not used' }}
