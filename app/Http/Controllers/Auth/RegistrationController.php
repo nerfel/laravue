@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class RegistrationController extends Controller
 {
@@ -22,11 +23,11 @@ class RegistrationController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            return response()->json([], Response::HTTP_OK);
+            return response()->json(['success' => true], Response::HTTP_OK);
         }
-        catch(\Exception $e) {
+        catch(Exception $e) {
             Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
