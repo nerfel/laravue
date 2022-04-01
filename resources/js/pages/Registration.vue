@@ -140,9 +140,10 @@
 
 <script>
 import axios from 'axios';
-import {API_REGISTRATION_URL} from '../api/auth';
+import { API_REGISTRATION_URL, API_LOGIN_URL } from '../api/auth';
 import useValidate from "@vuelidate/core";
 import { email, required, minLength, sameAs } from '@vuelidate/validators';
+import {mapMutations} from "vuex";
 
 export default {
     name: 'Registration',
@@ -161,25 +162,32 @@ export default {
         }
     },
     methods: {
-        sendForm() {
+        async sendForm() {
             this.emailIsUnique = true
             this.v$.form.$touch()
             if(!this.v$.form.$error) {
                 if (this.pending === false) {
                     this.pending = true;
-                    axios.post(API_REGISTRATION_URL, this.form)
-                        .then(response => {
+                    try {
+                        let registerResponse = await axios.post(API_REGISTRATION_URL, this.form)
 
-                            this.registered = true
-                        })
-                        .catch(errors => {
-                            if(errors.response.data.errors.email) {
-                                this.emailIsUnique = false
-                            }
-                        })
-                        .then(() => {
-                            this.pending = false
-                        })
+                        this.registered = true
+                        this.pending = false
+
+                        if(registerResponse.data.success) {
+                            axios.post(API_LOGIN_URL, { email: this.form.email, password: this.form.password })
+                                .then(response => {
+                                    localStorage.setItem('auth_token', response.data.token)
+                                    this.setUserToken()
+                                    this.$router.push({name: 'home'})
+                                })
+                        }
+                    }
+                    catch (errors) {
+                        if(errors.response.data.errors.email) {
+                            this.emailIsUnique = false
+                        }
+                    }
                 }
             }
             else {
@@ -187,6 +195,7 @@ export default {
             }
 
         },
+        ...mapMutations('user', ['setUserToken'])
     },
     validations() {
         return {
