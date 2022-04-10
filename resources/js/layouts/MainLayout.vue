@@ -38,7 +38,7 @@
 
 <script>
 import {API_LOGOUT_URL} from "../api/auth";
-import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 
@@ -70,12 +70,12 @@ export default {
                 .then(response => {
                     if(response.data.success) {
                         localStorage.removeItem('auth_token')
+                        localStorage.removeItem('auth_user')
                         this.clearUserData()
                         this.$router.push({name: 'login'})
                     }
                 })
         },
-        ...mapActions('user', ['fetchUserInfo']),
         ...mapMutations('user', ['clearUserData'])
     },
     computed: {
@@ -85,9 +85,6 @@ export default {
         this.inverval = setInterval(() => {
             this.date = new Date().toLocaleString("ru-RU", this.dateOptions)
         }, 1000)
-        if(localStorage.getItem('auth_token')) {
-            this.fetchUserInfo()
-        }
     }
 
 }

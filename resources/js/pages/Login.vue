@@ -118,6 +118,8 @@ export default {
                 axios.post(API_LOGIN_URL, this.form)
                     .then(response => {
                         localStorage.setItem('auth_token', response.data.token)
+                        localStorage.setItem('auth_user', JSON.stringify(response.data.user))
+
                         this.setUserToken()
                         this.$router.push({name: 'home'})
                     })

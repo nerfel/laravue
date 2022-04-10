@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
-        info: {},
+        info: JSON.parse(localStorage.getItem('auth_user')),
         userToken: localStorage.getItem('auth_token'),
         tokensList: {}
     },
@@ -26,23 +26,18 @@ export default {
     },
     actions: {
         async fetchUserInfo(ctx) {
-            try {
-                const response = await axios.get('/api/info', {
-                    headers: {
-                        'Authorization': `Bearer ${ctx.state.userToken}`
-                    }
-                })
-                ctx.commit('setUser', response.data)
+            const response = await axios.get(`/api/users/${ctx.state.info.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${ctx.state.userToken}`
+                }
+            })
+            ctx.commit('setUser', response.data)
 
-                return response.data
-            }
-            catch (e) {
-                console.log(e)
-            }
-        },
+            return response.data
+    },
         async updateUserInfo(ctx, data) {
             try {
-                return axios.put('api/update-user-info', data, {
+                return axios.put(`/api/users/${ctx.state.info.id}`, data, {
                     headers: {
                         'Authorization': `Bearer ${ctx.state.userToken}`
                     }
