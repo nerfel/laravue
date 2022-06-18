@@ -1,0 +1,13 @@
+name: laravue
+recipe: laravel
+config:
+  database: mysql
+  php: '7.4'
+  via: nginx
+  webroot: public
+services:
+  database:
+    type: mysql:8.0
+    portforward: 3307
+
+
