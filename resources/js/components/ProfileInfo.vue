@@ -6,7 +6,7 @@
         <div class="input-component mb-5">
             <div
                 class="relative h-10"
-                :class="email == '' ? 'empty' : ''"
+                :class="email === '' ? 'empty' : ''"
             >
                 <input v-model="email" id="email" type="text" name="email" class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm">
                 <label for="email" class="absolute left-2 transition-all bg-white px-1">
@@ -29,7 +29,7 @@
         <div class="input-component mb-5">
             <div
                 class="relative h-10"
-                :class="name == '' ? 'empty' : ''"
+                :class="name === '' ? 'empty' : ''"
             >
                 <input v-model="name" id="first_name" type="text" name="name" class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm">
                 <label for="first_name" class="absolute left-2 transition-all bg-white px-1">
@@ -47,7 +47,7 @@
         <div class="input-component mb-5">
             <div
                 class="relative h-10"
-                :class="lastName == '' ? 'empty' : ''"
+                :class="lastName === '' ? 'empty' : ''"
             >
                 <input v-model="lastName" id="last_name" type="text" name="last_name" class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm">
                 <label for="last_name" class="absolute left-2 transition-all bg-white px-1">
@@ -59,7 +59,7 @@
         <div class="input-component mb-5">
             <div
                 class="relative h-10"
-                :class="password == '' ? 'empty' : ''"
+                :class="password === '' ? 'empty' : ''"
             >
                 <input v-model="password" id="current_password" type="password" name="current_password" class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm">
                 <label for="current_password" class="absolute left-2 transition-all bg-white px-1">
@@ -82,7 +82,7 @@
         <div class="input-component mb-5">
             <div
                 class="relative h-10"
-                :class="newPassword == '' ? 'empty' : ''"
+                :class="newPassword === '' ? 'empty' : ''"
             >
                 <input v-model="newPassword" id="new_password" type="password" name="new_password" class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm">
                 <label for="new_password" class="absolute left-2 transition-all bg-white px-1">
@@ -105,7 +105,7 @@
         <div class="input-component mb-5">
             <div
                 class="relative h-10"
-                :class="passwordConfirm == '' ? 'empty' : ''"
+                :class="passwordConfirm === '' ? 'empty' : ''"
             >
                 <input v-model="passwordConfirm" id="password_confirm" type="password" name="new_password" class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm">
                 <label for="password_confirm" class="absolute left-2 transition-all bg-white px-1">
@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import {email, minLength, required, requiredIf, sameAs} from "@vuelidate/validators";
+import { email, minLength, required, requiredIf, sameAs } from "@vuelidate/validators";
 import { mapGetters, mapActions } from 'vuex';
 import useValidate from "@vuelidate/core";
 
@@ -206,7 +206,7 @@ export default {
             email: { email, required },
             password: { minLength:minLength(6), isCorrect() { return Boolean(this.passwordIsCorrect) }},
             newPassword: { minLength: minLength(6), requiredIfPassword: requiredIf(this.password) },
-            passwordConfirm: {minLength: minLength(6), requiredIfPassword: requiredIf(this.password), sameAsNewPassword:sameAs(this.newPassword)}
+            passwordConfirm: { minLength: minLength(6), requiredIfPassword: requiredIf(this.password), sameAsNewPassword:sameAs(this.newPassword) }
         }
     },
     mounted() {
@@ -220,7 +220,7 @@ export default {
 
 <style scoped>
     label {
-        top: 0%;
+        top: 0;
         transform: translateY(-50%);
         font-size: 11px;
         color: rgba(37, 99, 235, 1);

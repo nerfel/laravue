@@ -34,7 +34,7 @@
                 <div class="mb-6">
                     <div class="flex justify-between mb-2">
                         <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
-                        <a href="#!" class="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300">Forgot password?</a>
+                        <a href="#" class="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300">Forgot password?</a>
                     </div>
                     <input type="password"
                            name="password"

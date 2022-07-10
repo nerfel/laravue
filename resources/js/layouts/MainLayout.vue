@@ -4,7 +4,7 @@
             <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 border-none">
                 <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="/images/default-avatar.jpg" alt="avatar" />
                 <div class="flex flex-col">
-                    <span class="hidden md:block">{{ info.name }}</span>
+                    <span class="hidden md:block">{{ info.name }} {{ info?.lastName }}</span>
                     <span class="hidden md:block">{{ date }}</span>
                 </div>
             </div>
