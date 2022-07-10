@@ -4,6 +4,7 @@
  - Install dependencies `composer install`
  - Set up .env file
  - Run `php artisan key:generate`
+ - Run `php artisan migrate --seed`
 
  ---
 ### Vue deployment steps:
