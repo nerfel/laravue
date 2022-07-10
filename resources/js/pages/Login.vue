@@ -121,15 +121,15 @@ export default {
                         localStorage.setItem('auth_user', JSON.stringify(response.data.user))
 
                         this.setUserToken()
+                        this.setUser(response.data.user)
                         this.$router.push({name: 'home'})
                     })
-                    .catch(errors => {})
                     .then(() => {
                         this.pending = false;
                     });
             }
         },
-        ...mapMutations('user', ['setUserToken'])
+        ...mapMutations('user', ['setUserToken', 'setUser'])
     },
     validations() {
         return {
